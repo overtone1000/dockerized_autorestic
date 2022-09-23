@@ -1,0 +1,32 @@
+version: 2
+
+locations:
+  remote:
+    from: /sources
+    to: minio
+    cron: "$REMOTE_BACKUP_CRON"
+    forget: prune
+    options:
+      forget:
+        keep-last: $KEEP_LAST
+        keep-daily: $KEEP_DAILY
+        keep-weekly: $KEEP_WEEKLY
+        keep-monthly: $KEEP_MONTHLY
+        keep-yearly: $KEEP_YEARLY
+    hooks:
+      before:
+        - $BEFORE_HOOK
+      failure:
+        - $FAILURE_HOOK
+      success:
+        - $AFTER_HOOK
+
+backends:
+  minio:
+    type: s3
+    # Minio
+    path: $BACKEND_BUCKET
+    key: $RESTIC_PASSWORD
+    env:
+      AWS_ACCESS_KEY_ID: $S3_ACCOUNT_ID
+      AWS_SECRET_ACCESS_KEY: $S3_ACCOUNT_KEY

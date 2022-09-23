@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  app:
+    image:  docker.io/overtone1000/autorestic
+    volumes:
+      #Set time to be the same as host machine for autorestic's cron
+      - /etc/timezone:/etc/timezone:ro  #Set time zone to be the same as the host machine
+      - /etc/localtime:/etc/localtime:ro #Set local time to be the same as the host machine
+      #Backed up volumes need to be added to sources!
+      - backed_up_external_volume:/sources/external_volume_name
+    environment:
+      REMOTE_BACKUP_CRON: "0 3 * * *"
+      BACKEND_BUCKET: $BACKEND_PATH
+      RESTIC_PASSWORD: $RESTIC_PASSWORD
+      S3_ACCOUNT_ID: $USER
+      S3_ACCOUNT_KEY: $PASSWORD
+      KEEP_LAST: 5
+      KEEP_DAILY: 30
+      KEEP_WEEKLY: 52
+      KEEP_MONTHLY: 24
+      KEEP_YEARLY: 3
+      BEFORE_HOOK: wget https://healthchecks_url/start -T 10 -t 5 -O /dev/null
+      FAILURE_HOOK:  wget https://healthchecks_url/fail -T 10 -t 5 -O /dev/null
+      AFTER_HOOK: wget https://healthchecks_url -T 10 -t 5 -O /dev/null
+      CRON_LOOP_START_HOOK: wget https://healthchecks_url/start -T 10 -t 5 -O /dev/null
+      CRON_LOOP_FINISH_HOOK: wget https://healthchecks_url -T 10 -t 5 -O /dev/null
+
+volumes:
+  backed_up_external_volume:
+    external: true
+    name: external_volume_name
