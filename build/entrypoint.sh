@@ -14,7 +14,7 @@ autorestic check -c ./autorestic.yml
 
 echo
 echo "Running backup on startup"
-autorestic backup -c ./autorestic.yml
+autorestic backup -c ./autorestic.yml -a
 
 echo
 echo "Entering infinite loop"
