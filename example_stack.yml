@@ -24,6 +24,11 @@ services:
       AFTER_HOOK: wget https://healthchecks_url -T 10 -t 5 -O /dev/null
       CRON_LOOP_START_HOOK: wget https://healthchecks_url/start -T 10 -t 5 -O /dev/null
       CRON_LOOP_FINISH_HOOK: wget https://healthchecks_url -T 10 -t 5 -O /dev/null
+    logging:
+      driver: local
+      options:
+        max-size: 1m
+
 
 volumes:
   backed_up_external_volume:
