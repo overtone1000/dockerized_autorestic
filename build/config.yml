@@ -5,7 +5,7 @@ locations:
     from: /sources
     to: minio
     cron: $REMOTE_BACKUP_CRON
-    #forget: prune #deprecated?
+    forget: prune
     options:
       forget:
         keep-last: $KEEP_LAST
@@ -23,8 +23,7 @@ locations:
 
 backends:
   minio:
-    type: s3
-    # Minio
+    type: $BACKEND_TYPE
     path: $BACKEND_BUCKET
     key: $RESTIC_PASSWORD
     env:

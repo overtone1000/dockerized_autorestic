@@ -10,6 +10,7 @@ services:
       - backed_up_external_volume:/sources/external_volume_name
     environment:
       REMOTE_BACKUP_CRON: "0 3 * * *"
+      BACKEND_TYPE: $BACKEND_TYPE #s3 for minio, b2 for backblaze...
       BACKEND_BUCKET: $BACKEND_PATH
       RESTIC_PASSWORD: $RESTIC_PASSWORD
       S3_ACCOUNT_ID: $USER
