@@ -16,4 +16,4 @@ RUN apk add --no-cache restic gettext
 COPY config.yml autorestic_preconfig.yml
 COPY entrypoint.sh entrypoint.sh
 
-ENTRYPOINT ["bash","entrypoint.sh"]
+ENTRYPOINT ["/bin/sh","entrypoint.sh"]
