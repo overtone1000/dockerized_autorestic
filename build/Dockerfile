@@ -2,9 +2,9 @@ FROM alpine:3
 
 #RUN apt-get -y update && apt-get -y install bash wget bzip2
 RUN apk update 
-RUN apk add --no-cache wget bzip2
+RUN apk add --no-cache bash wget bzip2
 
-RUN wget -qO - https://raw.githubusercontent.com/CupCakeArmy/autorestic/master/install.sh | /bin/sh
+RUN wget -qO - https://raw.githubusercontent.com/CupCakeArmy/autorestic/master/install.sh | bash
 
 #RUN apt-get clean && rm -rf /var/lib/apt/lists/*;
 
@@ -16,4 +16,4 @@ RUN apk add --no-cache restic gettext
 COPY config.yml autorestic_preconfig.yml
 COPY entrypoint.sh entrypoint.sh
 
-ENTRYPOINT ["/bin/sh","entrypoint.sh"]
+ENTRYPOINT ["bash","entrypoint.sh"]
