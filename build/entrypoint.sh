@@ -1,4 +1,4 @@
-#!bash
+#!/bin/bash
 
 echo
 echo "Initializing path"
@@ -25,7 +25,7 @@ do
     autorestic -c ./autorestic.yml --ci cron > /tmp/autorestic.log 2>&1
     $CRON_LOOP_FINISH_HOOK
     echo "Cron finished. Log file:"
-    echo $(cat /tmp/autorestic.log)
+    echo "$(cat /tmp/autorestic.log)"
     rm /tmp/autorestic.log
     echo "Sleeping."
     sleep 15m
